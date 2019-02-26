@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Customer } from './app.component';
 
@@ -20,5 +20,13 @@ export class HttpService {
 
   updateCustomerPut(customer: Customer): Observable<Customer> {
     return this.http.put<Customer>('http://localhost:8080/customer/update', customer);
+  }
+
+  deleteCustomer(firstName: string, lastName: string, pesel: string): Observable<Array<Customer>> {
+    console.log(firstName);
+    const param = new HttpParams()
+      .set('firstName', firstName);
+
+    return this.http.get<Array<Customer>>('http://localhost:8080/customer/search', { params: param });
   }
 }

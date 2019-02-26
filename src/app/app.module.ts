@@ -7,6 +7,7 @@ import { HttpService } from './http.service';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { UpdateCustomerComponent } from './update-customer/update-customer.component';
 import { AppRoutingModule } from './app.routing.module';
+import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
 
 
 
@@ -14,7 +15,8 @@ import { AppRoutingModule } from './app.routing.module';
   declarations: [
     AppComponent,
     AddCustomerComponent,
-    UpdateCustomerComponent
+    UpdateCustomerComponent,
+    DeleteCustomerComponent
   ],
   imports: [
     BrowserModule,
