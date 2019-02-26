@@ -8,6 +8,7 @@ import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { UpdateCustomerComponent } from './update-customer/update-customer.component';
 import { AppRoutingModule } from './app.routing.module';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
+import { FindCustomerComponent } from './find-customer/find-customer.component';
 
 
 
@@ -16,7 +17,8 @@ import { DeleteCustomerComponent } from './delete-customer/delete-customer.compo
     AppComponent,
     AddCustomerComponent,
     UpdateCustomerComponent,
-    DeleteCustomerComponent
+    DeleteCustomerComponent,
+    FindCustomerComponent
   ],
   imports: [
     BrowserModule,
