@@ -13,4 +13,12 @@ export class HttpService {
     return this.http.post<Customer>('http://localhost:8080/customer/create', customer);
 
   }
+
+  findByIdGet(id: number): Observable<Customer> {
+    return this.http.get<Customer>('http://localhost:8080/customer/' + id);
+  }
+
+  updateCustomerPut(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>('http://localhost:8080/customer/update', customer);
+  }
 }
