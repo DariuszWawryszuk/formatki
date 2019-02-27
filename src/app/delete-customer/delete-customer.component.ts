@@ -3,6 +3,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { HttpService } from '../http.service';
 import { Customer } from '../app.component';
 
+
+
 @Component({
   selector: 'app-delete-customer',
   templateUrl: './delete-customer.component.html',
@@ -19,23 +21,13 @@ export class DeleteCustomerComponent implements OnInit {
   constructor(private httpService: HttpService) { }
 
   ngOnInit() {
+
+    console.log(this.customer);
     this.deleteCustomerForm = new FormGroup({
       firstName: new FormControl(null),
-      lastName: new FormControl(null),
+      lastName: new FormControl('Tralala'),
       pesel: new FormControl(null),
     });
-  }
-
-  find() {
-
-    const firstName = this.deleteCustomerForm.value.firstName;
-    const lastName = this.deleteCustomerForm.value.lastName;
-    const pesel = this.deleteCustomerForm.value.pesel;
-
-    this.httpService.deleteCustomer(firstName, lastName, pesel).subscribe(customer => {
-      console.log(customer);
-    });
-
   }
 
 }

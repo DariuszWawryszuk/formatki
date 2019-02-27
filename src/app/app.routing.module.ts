@@ -3,13 +3,14 @@ import {Routes, RouterModule} from '@angular/router';
 import { NgModule } from '@angular/core';
 import { UpdateCustomerComponent } from './update-customer/update-customer.component';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
+import { FindCustomerComponent } from './find-customer/find-customer.component';
 
 
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/updateCustomer',
+    redirectTo: '/findCustomer',
     pathMatch: 'full'
   },
   {
@@ -23,6 +24,10 @@ const appRoutes: Routes = [
   {
     path: 'deleteCustomer',
     component: DeleteCustomerComponent
+  },
+  {
+    path: 'findCustomer',
+    component: FindCustomerComponent
   }
 ];
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Customer } from '../app.component';
-import { HttpService } from '../http.service';
+import { DataBaseService } from '../data-base.service';
 
 @Component({
   selector: 'app-find-customer',
@@ -12,11 +12,12 @@ export class FindCustomerComponent implements OnInit {
 
   findCustomerForm: FormGroup;
 
+
   customer: Customer;
 
-  customers: Array<Customer>;
+  customersList: Array<Customer>;
 
-  constructor(private httpService: HttpService) { }
+  constructor(private dbService: DataBaseService) { }
 
   ngOnInit() {
     this.findCustomerForm = new FormGroup({
@@ -32,9 +33,10 @@ export class FindCustomerComponent implements OnInit {
     const lastName = this.findCustomerForm.value.lastName;
     const pesel = this.findCustomerForm.value.pesel;
 
-    this.httpService.deleteCustomer(firstName, lastName, pesel).subscribe(customer => {
-      console.log(customer);
-    });
+    this.customersList = this.dbService.getCustomers(firstName, lastName, pesel);
 
   }
+
+
+
 }

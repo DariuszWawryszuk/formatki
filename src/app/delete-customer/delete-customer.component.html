@@ -1,27 +1,21 @@
-
-<app-find-customer></app-find-customer>
-
-
 <form [formGroup]="deleteCustomerForm">
-  <h3>Wyszukaj klienta do usunięcia</h3>
-  <div class="form-row">
+
+<h3>Na pewno chcesz usunąć tego klienta</h3>
+
+<div class="form-row">
     <div class="form-group col-md-3">
       <label for="firstName">Imię: </label>
-      <input type="text" class="form-control" id="firstName" formControlName="firstName">
+      <input type="text" class="form-control" id="firstName" formControlName="firstName" disabled>
     </div>
     <div class="form-group col-md-3">
       <label for="lastName">Nazwisko: </label>
-      <input type="text" class="form-control" id="lastName" formControlName="lastName">
+      <input type="text" class="form-control" id="lastName" formControlName="lastName" disabled>
     </div>
+    <div class="form-group col-md-2">
+        <label for="pesel">Pesel: </label>
+        <input type="text" class="form-control" id="pesel" formControlName="pesel" disabled>
+      </div>
   </div>
 
-  <P>LUB</P>
-  <div class="form-row">
-  <div class="form-group col-md-3">
-    <label for="pesel">Pesel: </label>
-    <input type="text" class="form-control" id="pesel" formControlName="pesel">
-  </div>
-</div>
-  <button (click)="find()" class="btn btn-success">Wyszukaj</button>
 
 </form>

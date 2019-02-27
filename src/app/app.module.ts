@@ -9,6 +9,7 @@ import { UpdateCustomerComponent } from './update-customer/update-customer.compo
 import { AppRoutingModule } from './app.routing.module';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
 import { FindCustomerComponent } from './find-customer/find-customer.component';
+import { DataBaseService } from './data-base.service';
 
 
 
@@ -18,7 +19,7 @@ import { FindCustomerComponent } from './find-customer/find-customer.component';
     AddCustomerComponent,
     UpdateCustomerComponent,
     DeleteCustomerComponent,
-    FindCustomerComponent
+    FindCustomerComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +28,7 @@ import { FindCustomerComponent } from './find-customer/find-customer.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [HttpService],
+  providers: [HttpService, DataBaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
