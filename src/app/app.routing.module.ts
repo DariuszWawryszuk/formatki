@@ -1,16 +1,19 @@
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import {Routes, RouterModule} from '@angular/router';
 import { NgModule } from '@angular/core';
-import { UpdateCustomerComponent } from './update-customer/update-customer.component';
-import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
-import { FindCustomerComponent } from './find-customer/find-customer.component';
+import { UpdateCustomerComponent } from './customer-update/update-customer/update-customer.component';
+import { DeleteCustomerComponent } from './customer-delete/delete-customer/delete-customer.component';
+import { FindCustomerComponent } from './customer-delete/find-customer/find-customer.component';
+import { CustomerDeleteComponent } from './customer-delete/customer-delete.component';
+
+
 
 
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/findCustomer',
+    redirectTo: '/deleteCustomer',
     pathMatch: 'full'
   },
   {
@@ -23,11 +26,31 @@ const appRoutes: Routes = [
   },
   {
     path: 'deleteCustomer',
-    component: DeleteCustomerComponent
+    component: CustomerDeleteComponent,
+    children: [
+      {
+        path: '',
+        component: FindCustomerComponent
+      },
+      {
+        path: ':id',
+        component: DeleteCustomerComponent
+      }
+    ]
   },
   {
     path: 'findCustomer',
-    component: FindCustomerComponent
+    component: FindCustomerComponent,
+    children: [
+      {
+        path: '',
+        component: DeleteCustomerComponent
+      },
+      {
+        path: ':id',
+        component: UpdateCustomerComponent
+      }
+    ]
   }
 ];
 

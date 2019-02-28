@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Customer } from '../app.component';
-import { HttpService } from '../http.service';
+import { HttpService } from 'src/app/http.service';
+import { Customer } from 'src/app/app.component';
 
 @Component({
   selector: 'app-update-customer',

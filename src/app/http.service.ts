@@ -14,8 +14,8 @@ export class HttpService {
 
   }
 
-  findByIdGet(id: number): Observable<Customer> {
-    return this.http.get<Customer>('http://localhost:8080/customer/' + id);
+  findByIdGet(id: string): Observable<Customer> {
+    return this.http.get<Customer>('http://localhost:8080/customer/' + id + '');
   }
 
   updateCustomerPut(customer: Customer): Observable<Customer> {
@@ -39,6 +39,14 @@ export class HttpService {
       .set('lastName', lastName)
       .set('pesel', pesel);
 
+
+    return this.http.get<Array<Customer>>('http://localhost:8080/customer/search', { params: param });
+  }
+
+  findCustomersByPesel(pesel: string): Observable<Array<Customer>> {
+
+    const param = new HttpParams()
+      .set('pesel', pesel);
 
     return this.http.get<Array<Customer>>('http://localhost:8080/customer/search', { params: param });
   }

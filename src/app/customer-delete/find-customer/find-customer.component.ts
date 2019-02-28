@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Customer } from '../app.component';
-import { DataBaseService } from '../data-base.service';
+import { Customer } from 'src/app/app.component';
+import { DataBaseService } from 'src/app/data-base.service';
 
 @Component({
   selector: 'app-find-customer',
@@ -32,6 +32,7 @@ export class FindCustomerComponent implements OnInit {
     const firstName = this.findCustomerForm.value.firstName;
     const lastName = this.findCustomerForm.value.lastName;
     const pesel = this.findCustomerForm.value.pesel;
+
 
     this.customersList = this.dbService.getCustomers(firstName, lastName, pesel);
 

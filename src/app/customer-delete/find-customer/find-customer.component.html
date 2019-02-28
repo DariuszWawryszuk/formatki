@@ -26,8 +26,7 @@
   <ul>
       <li *ngFor="let customer of customersList">
         {{customer.firstName}} {{customer.lastName}} {{customer.pesel}}
-        <button type="button" class="btn btn-info" [routerLink]="['/updateCustomer']" fragment="{{customer.id}}">Zmień</button>
-        <button type="button" class="btn btn-danger" [routerLink]="['/deleteCustomer']" fragment="{{customer.id}}">Usuń</button>
+        <button type="button" class="btn btn-danger" [routerLink]="[customer.id]" >Usuń</button>
 
       </li>
     </ul>
