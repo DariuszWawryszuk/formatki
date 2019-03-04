@@ -5,6 +5,8 @@ import { UpdateCustomerComponent } from './customer-update/update-customer/updat
 import { DeleteCustomerComponent } from './customer-delete/delete-customer/delete-customer.component';
 import { FindCustomerComponent } from './customer-delete/find-customer/find-customer.component';
 import { CustomerDeleteComponent } from './customer-delete/customer-delete.component';
+import { CustomerUpdateComponent } from './customer-update/customer-update.component';
+import { FindUpdateComponent } from './customer-update/find-update/find-update.component';
 
 
 
@@ -22,7 +24,17 @@ const appRoutes: Routes = [
   },
   {
     path: 'updateCustomer',
-    component: UpdateCustomerComponent
+    component: CustomerUpdateComponent,
+    children: [
+      {
+        path: '',
+        component: FindUpdateComponent
+      },
+      {
+        path: ':id',
+        component: UpdateCustomerComponent
+      }
+    ]
   },
   {
     path: 'deleteCustomer',

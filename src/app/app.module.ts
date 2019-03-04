@@ -11,6 +11,9 @@ import { CustomerDeleteComponent } from './customer-delete/customer-delete.compo
 import { UpdateCustomerComponent } from './customer-update/update-customer/update-customer.component';
 import { DeleteCustomerComponent } from './customer-delete/delete-customer/delete-customer.component';
 import { FindCustomerComponent } from './customer-delete/find-customer/find-customer.component';
+import { CustomerUpdateComponent } from './customer-update/customer-update.component';
+import { FindUpdateComponent } from './customer-update/find-update/find-update.component';
+
 
 
 
@@ -23,6 +26,8 @@ import { FindCustomerComponent } from './customer-delete/find-customer/find-cust
     DeleteCustomerComponent,
     FindCustomerComponent,
     CustomerDeleteComponent,
+    CustomerUpdateComponent,
+    FindUpdateComponent
   ],
   imports: [
     BrowserModule,

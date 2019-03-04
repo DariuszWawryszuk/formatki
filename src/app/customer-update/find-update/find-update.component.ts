@@ -4,13 +4,14 @@ import { Customer } from 'src/app/app.component';
 import { DataBaseService } from 'src/app/data-base.service';
 
 @Component({
-  selector: 'app-find-customer',
-  templateUrl: './find-customer.component.html',
-  styleUrls: ['./find-customer.component.css']
+  selector: 'app-find-update',
+  templateUrl: './find-update.component.html',
+  styleUrls: ['./find-update.component.css']
 })
-export class FindCustomerComponent implements OnInit {
+export class FindUpdateComponent implements OnInit {
 
-  findCustomerForm: FormGroup;
+
+  findCustomerForm1: FormGroup;
 
 
   customer: Customer;
@@ -20,7 +21,7 @@ export class FindCustomerComponent implements OnInit {
   constructor(private dbService: DataBaseService) { }
 
   ngOnInit() {
-    this.findCustomerForm = new FormGroup({
+    this.findCustomerForm1 = new FormGroup({
       firstName: new FormControl(null),
       lastName: new FormControl(null),
       pesel: new FormControl(null),
@@ -29,15 +30,12 @@ export class FindCustomerComponent implements OnInit {
 
   find() {
 
-    const firstName = this.findCustomerForm.value.firstName;
-    const lastName = this.findCustomerForm.value.lastName;
-    const pesel = this.findCustomerForm.value.pesel;
+    const firstName = this.findCustomerForm1.value.firstName;
+    const lastName = this.findCustomerForm1.value.lastName;
+    const pesel = this.findCustomerForm1.value.pesel;
 
 
     this.customersList = this.dbService.getCustomers(firstName, lastName, pesel);
 
   }
-
-
-
 }

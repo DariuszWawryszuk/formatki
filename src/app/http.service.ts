@@ -25,20 +25,25 @@ export class HttpService {
   deleteCustomer(firstName: string, lastName: string, pesel: string): Observable<Array<Customer>> {
 
     const param = new HttpParams()
-      .set('firstName', firstName)
-      .set('lastName', lastName)
-      .set('pesel', pesel);
+    .set('firstName', firstName)
+    .set('lastName', lastName)
+    .set('pesel', pesel);
 
 
     return this.http.get<Array<Customer>>('http://localhost:8080/customer/search', { params: param });
   }
+
   findCustomers(firstName: string, lastName: string, pesel: string): Observable<Array<Customer>> {
+    let param = new HttpParams();
 
-    const param = new HttpParams()
-      .set('firstName', firstName)
-      .set('lastName', lastName)
-      .set('pesel', pesel);
-
+    if (pesel !== null) {
+       param = new HttpParams()
+        .set('pesel', pesel);
+    } else if (firstName !== null && lastName !== null ) {
+        param = new HttpParams()
+        .set('firstName', firstName)
+        .set('lastName', lastName);
+    }
 
     return this.http.get<Array<Customer>>('http://localhost:8080/customer/search', { params: param });
   }
