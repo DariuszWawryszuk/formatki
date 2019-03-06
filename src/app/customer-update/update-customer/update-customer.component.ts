@@ -17,9 +17,10 @@ export class UpdateCustomerComponent implements OnInit {
   updateCustomerForm$: Observable<FormGroup>;
 
   customer$: Observable<Customer>;
-  customer: Customer;
 
   id$: Observable<string>;
+
+  id: string;
 
   documents = ['Dowód osobisty', 'Paszport', 'Prawo jazdy'];
 
@@ -32,6 +33,10 @@ export class UpdateCustomerComponent implements OnInit {
   }
 
   update() {
+    this.activatedRoute.paramMap.pipe(map(params => params.get('id'))).subscribe(id => {
+      this.id = id;
+    });
+
     this.customer$ = this.updateCustomerForm$.pipe(map(updateCustomerForm => {
       return new Customer({
         firstName: updateCustomerForm.value.firstName,
@@ -53,7 +58,7 @@ export class UpdateCustomerComponent implements OnInit {
     }
     ));
 
-    this.customer$.subscribe(customer => this.httpService.updateCustomerPut(customer));
+    this.customer$.subscribe(customer => this.httpService.updateCustomerPut(this.id, customer));
   }
 
   private createForm() {
