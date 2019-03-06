@@ -1,21 +1,22 @@
-<form [formGroup]="deleteCustomerForm">
+<form *ngIf="deleteCustomerForm$ | async as formGroup" [formGroup]="formGroup">
 
 <h3>Na pewno chcesz usunąć tego klienta</h3>
 
-<div class="form-row">
-    <div class="form-group col-md-3">
-      <label for="firstName">Imię: </label>
-      <input type="text" class="form-control" id="firstName" formControlName="firstName" >
-    </div>
-    <div class="form-group col-md-3">
-      <label for="lastName">Nazwisko: </label>
-      <input type="text" class="form-control" id="lastName" formControlName="lastName" >
-    </div>
-    <div class="form-group col-md-2">
-        <label for="pesel">Pesel: </label>
-        <input type="text" class="form-control" id="pesel" formControlName="pesel" >
+  <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="firstName">Imię: </label>
+        <input type="text" class="form-control" id="firstName" formControlName="firstName" >
       </div>
+      <div class="form-group col-md-3">
+        <label for="lastName">Nazwisko: </label>
+        <input type="text" class="form-control" id="lastName" formControlName="lastName" >
+      </div>
+      <div class="form-group col-md-2">
+          <label for="pesel">Pesel: </label>
+          <input type="text" class="form-control" id="pesel" formControlName="pesel" >
+        </div>
   </div>
 
+  <button (click)="delete()" class="btn btn-danger">Usuń</button>
 
 </form>

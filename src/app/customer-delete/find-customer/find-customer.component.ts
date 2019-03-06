@@ -12,10 +12,9 @@ export class FindCustomerComponent implements OnInit {
 
   findCustomerForm: FormGroup;
 
-
   customer: Customer;
 
-  customersList: Array<Customer> = [];
+  customersList: Array<Customer>;
 
   constructor(private dbService: DataBaseService) { }
 
@@ -34,7 +33,9 @@ export class FindCustomerComponent implements OnInit {
     const pesel = this.findCustomerForm.value.pesel;
 
 
-    this.customersList = this.dbService.getCustomers(firstName, lastName, pesel);
+    this.dbService.getCustomers(firstName, lastName, pesel).subscribe( customers => {
+      this.customersList = customers;
+    });
 
   }
 

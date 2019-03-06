@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { HttpService } from 'src/app/http.service';
 import { Customer } from 'src/app/app.component';
+import { Observable } from 'rxjs';
+import { map, switchMap, filter } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { DataBaseService } from 'src/app/data-base.service';
 
 @Component({
   selector: 'app-update-customer',
@@ -10,66 +14,67 @@ import { Customer } from 'src/app/app.component';
 })
 export class UpdateCustomerComponent implements OnInit {
 
-  updateCustomerForm: FormGroup;
+  updateCustomerForm$: Observable<FormGroup>;
 
+  customer$: Observable<Customer>;
+  customer: Customer;
+
+  id$: Observable<string>;
 
   documents = ['Dowód osobisty', 'Paszport', 'Prawo jazdy'];
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService, private activatedRoute: ActivatedRoute, private dbService: DataBaseService) { }
 
   ngOnInit() {
-    this.updateCustomerForm = new FormGroup({
-      id: new FormControl(null),
-      firstName: new FormControl(null),
-      lastName: new FormControl(null),
-      pesel: new FormControl(null),
-      sex: new FormControl(null),
-      cardNumber: new FormControl(null),
-      dateOfBirth: new FormControl(null),
-      identityDocType: new FormControl(this.documents[0]),
-      identityDocNumber: new FormControl(null),
-      email: new FormControl(null),
-      address: new FormGroup({
-        street: new FormControl(null),
-        propertyNo: new FormControl(null),
-        postCode: new FormControl(null),
-        city: new FormControl(null),
-      }),
-    });
+    this.id$ = this.activatedRoute.paramMap.pipe(map(params => params.get('id')));
+    this.customer$ = this.id$.pipe(switchMap(x => this.dbService.getCustomerById(x)));
+    this.createForm();
   }
+
   update() {
-    const customer: Customer = this.updateCustomerForm.value;
-    customer.active = 'true';
+    this.customer$ = this.updateCustomerForm$.pipe(map(updateCustomerForm => {
+      return new Customer({
+        firstName: updateCustomerForm.value.firstName,
+        lastName: updateCustomerForm.value.lastName,
+        pesel: updateCustomerForm.value.pesel,
+        sex: updateCustomerForm.value.sex,
+        cardNumber: updateCustomerForm.value.cardNumber,
+        dateOfBirth: updateCustomerForm.value.dateOfBirth,
+        identityDocType: updateCustomerForm.value.identityDocType,
+        identityDocNumber: updateCustomerForm.value.identityDocNumber,
+        email: updateCustomerForm.value.email,
+        address: {
+          street: updateCustomerForm.value.street,
+          propertyNo: updateCustomerForm.value.propertyNo,
+          postCode: updateCustomerForm.value.postCode,
+          city: updateCustomerForm.value.city,
+        }
+      });
+    }
+    ));
 
-    this.httpService.updateCustomerPut(customer).subscribe(c => {
-      console.log(c);
-    });
+    this.customer$.subscribe(customer => this.httpService.updateCustomerPut(customer));
   }
 
-  find() {
-    const id = this.updateCustomerForm.value.id;
-
-    this.httpService.findByIdGet(id).subscribe(customer => {
-      console.log(customer);
-      this.updateCustomerForm.patchValue({
-        firstName: customer.firstName,
-        lastName: customer.lastName,
-        pesel: customer.pesel,
-        sex: customer.sex,
-        cardNumber: customer.cardNumber,
-        dateOfBirth: customer.dateOfBirth,
-        identityDocType: customer.identityDocType,
-        identityDocNumber: customer.identityDocNumber,
-        email: customer.email,
-        address: {
-        street: customer.address.street,
-        propertyNo: customer.address.propertyNo,
-        postCode: customer.address.postCode,
-        city: customer.address.city,
-      }
+  private createForm() {
+    this.updateCustomerForm$ = this.customer$.pipe(map(customer => {
+      return new FormGroup({
+        firstName: new FormControl(customer.firstName),
+        lastName: new FormControl(customer.lastName),
+        pesel: new FormControl(customer.pesel),
+        sex: new FormControl(customer.sex),
+        cardNumber: new FormControl(customer.cardNumber),
+        dateOfBirth: new FormControl(customer.dateOfBirth),
+        identityDocType: new FormControl(customer.identityDocType),
+        identityDocNumber: new FormControl(customer.identityDocNumber),
+        email: new FormControl(customer.email),
+        address: new FormGroup({
+          street: new FormControl(customer.address.street),
+          propertyNo: new FormControl(customer.address.propertyNo),
+          postCode: new FormControl(customer.address.postCode),
+          city: new FormControl(customer.address.city),
+        })
       });
-    });
-
+    }));
   }
 }
-

@@ -35,7 +35,9 @@ export class FindUpdateComponent implements OnInit {
     const pesel = this.findCustomerForm1.value.pesel;
 
 
-    this.customersList = this.dbService.getCustomers(firstName, lastName, pesel);
+    this.dbService.getCustomers(firstName, lastName, pesel).subscribe( customers => {
+      this.customersList = customers;
+    });
 
   }
 }

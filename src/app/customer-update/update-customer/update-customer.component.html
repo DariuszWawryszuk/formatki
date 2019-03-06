@@ -1,12 +1,4 @@
-<form [formGroup]="updateCustomerForm">
-
-    <h3>Podaj ID klienta</h3>
-    <div class="form-group col-md-3">
-      <label for="id">Id:</label>
-      <input type="text" class="form-control" id="id" formControlName="id" placeholder="Id">
-    </div>
-    <button (click)="find()" class="btn btn-success">Wyszukaj</button>
-<br>
+<form *ngIf="updateCustomerForm$ | async as formGroup" [formGroup]="formGroup">
   <h3>Modyfikacja klienta</h3>
   <div class="form-group col-md-3">
     <label for="firstName">Imię:</label>
@@ -96,6 +88,5 @@
   </div>
 
   <button (click)="update()" class="btn btn-success">Modyfikuj</button>
-  <button type="reset" class="btn btn-danger">Reset</button>
 </form>
->
+

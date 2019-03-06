@@ -15,32 +15,26 @@ export class HttpService {
   }
 
   findByIdGet(id: string): Observable<Customer> {
-    return this.http.get<Customer>('http://localhost:8080/customer/' + id + '');
+    return this.http.get<Customer>('http://localhost:8080/customer/' + id);
   }
 
-  updateCustomerPut(customer: Customer): Observable<Customer> {
+  updateCustomerPut(id: string, customer: Customer): Observable<Customer> {
     return this.http.put<Customer>('http://localhost:8080/customer/update', customer);
   }
 
-  deleteCustomer(firstName: string, lastName: string, pesel: string): Observable<Array<Customer>> {
-
-    const param = new HttpParams()
-    .set('firstName', firstName)
-    .set('lastName', lastName)
-    .set('pesel', pesel);
-
-
-    return this.http.get<Array<Customer>>('http://localhost:8080/customer/search', { params: param });
+  deleteCustomer(id: string): Observable<Customer> {
+    console.log(id, 'tra lala');
+    return this.http.delete<Customer>('http://localhost:8080/customer/' + id);
   }
 
   findCustomers(firstName: string, lastName: string, pesel: string): Observable<Array<Customer>> {
     let param = new HttpParams();
 
     if (pesel !== null) {
-       param = new HttpParams()
+      param = new HttpParams()
         .set('pesel', pesel);
-    } else if (firstName !== null && lastName !== null ) {
-        param = new HttpParams()
+    } else if (firstName !== null && lastName !== null) {
+      param = new HttpParams()
         .set('firstName', firstName)
         .set('lastName', lastName);
     }

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ActivatedRoute, Params, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Customer } from 'src/app/app.component';
 import { HttpService } from 'src/app/http.service';
 import { DataBaseService } from 'src/app/data-base.service';
+import { Observable } from 'rxjs';
+import { map, switchMap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-delete-customer',
@@ -12,33 +14,34 @@ import { DataBaseService } from 'src/app/data-base.service';
 })
 export class DeleteCustomerComponent implements OnInit {
 
-  deleteCustomerForm: FormGroup;
+  deleteCustomerForm$: Observable<FormGroup>;
 
-  customer: Customer;
+  customer$: Observable<Customer>;
 
   customers: Array<Customer>;
 
-  id: string;
+  id$: Observable<string>;
 
   constructor(private httpService: HttpService, private activatedRoute: ActivatedRoute, private dbService: DataBaseService) { }
 
   ngOnInit() {
+    this.id$ = this.activatedRoute.paramMap.pipe(map(params => params.get('id')));
+    this.customer$ = this.id$.pipe(switchMap(x => this.dbService.getCustomerById(x)));
+    this.createForm();
+  }
 
-    this.activatedRoute.paramMap.subscribe(params => {
-     this.id = params.get('id');
+  delete() {
+    this.id$.subscribe(id => this.dbService.getDeleteCustomer(id));
+  }
 
-
-    });
-    console.log(this.id);
-    this.customer = this.dbService.getCustomerById(this.id);
-    console.log(this.customer);
-
-
-    this.deleteCustomerForm = new FormGroup({
-      firstName: new FormControl(this.customer.firstName),
-      lastName: new FormControl(this.customer.lastName),
-      pesel: new FormControl(this.customer.pesel),
-    });
+  private createForm() {
+    this.deleteCustomerForm$ = this.customer$.pipe(filter(x => x !== undefined), map(customer => {
+      return new FormGroup({
+        firstName: new FormControl({ value: customer.firstName, disabled: true }),
+        lastName: new FormControl({ value: customer.lastName, disabled: true }),
+        pesel: new FormControl({ value: customer.pesel, disabled: true }),
+      });
+    }));
   }
 
 }

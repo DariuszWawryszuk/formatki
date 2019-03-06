@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Customer } from './app.component';
 import { HttpService } from './http.service';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
@@ -13,28 +14,17 @@ export class DataBaseService {
 
   constructor(private httpService: HttpService) { }
 
-  getCustomerById(id: string): Customer {
-    this.httpService.findByIdGet(id).subscribe( c => {
-      this.customer = c;
-    });
-
-    return this.customer;
+  getCustomerById(id: string): Observable<Customer> {
+    return this.httpService.findByIdGet(id);
   }
 
-  getCustomers(firstName, lastName, pesel): Array<Customer> {
-     this.httpService.findCustomers(firstName, lastName, pesel).subscribe(customers => {
-      this.customersList = customers;
-    });
+  getCustomers(firstName, lastName, pesel): Observable<Array<Customer>> {
+    return this.httpService.findCustomers(firstName, lastName, pesel);
 
-     return this.customersList;
-}
+  }
 
-getCustomersByPesel(pesel): Array<Customer> {
-  this.httpService.findCustomersByPesel(pesel).subscribe(customers => {
-   this.customersList = customers;
- });
-
-  return this.customersList;
-}
+  getDeleteCustomer(id: string): Observable<Customer> {
+    return this.httpService.deleteCustomer(id);
+  }
 
 }
